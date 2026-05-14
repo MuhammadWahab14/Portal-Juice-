@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import heroJuice from "@/assets/hero-juice-cinematic.mp4.asset.json" with { type: "json" };
 
 const VIDEO_1 = "/videos/03-video-full.mp4";
-const VIDEO_2 = heroJuice.url;
+const VIDEO_2 = "/videos/hero-video-2.mp4";
 const V1_DURATION = 9;
 const V2_DURATION = 10;
 const TOTAL = V1_DURATION + V2_DURATION; // 19s
