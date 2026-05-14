@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/portal-juice-logo.png";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/juices", label: "Juices" },
-  { to: "/contact", label: "Contact Info" },
-] as const;
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/juices", label: "Juices" },
+  { href: "/contact", label: "Contact Info" },
+];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,25 +27,28 @@ export function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-        <Link to="/" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <img src={logo} alt="Portal Juice" className="h-12 w-auto" />
           <span className="hidden sm:inline text-lg font-serif font-semibold tracking-tight text-foreground">
             Portal Juice
           </span>
-        </Link>
+        </a>
 
         <nav className="hidden md:flex items-center gap-10">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              activeOptions={{ exact: true }}
-              activeProps={{ className: "text-brand" }}
-              className="text-[15px] font-medium text-foreground/70 hover:text-brand transition-colors"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {links.map((l) => {
+            const isActive = typeof window !== "undefined" && window.location.pathname === l.href;
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                className={`text-[15px] font-medium transition-colors hover:text-brand ${
+                  isActive ? "text-brand" : "text-foreground/70"
+                }`}
+              >
+                {l.label}
+              </a>
+            );
+          })}
         </nav>
 
         <button
@@ -62,16 +64,14 @@ export function Navbar() {
         <div className="md:hidden border-t border-border bg-background">
           <nav className="flex flex-col px-6 py-4">
             {links.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
+              <a
+                key={l.href}
+                href={l.href}
                 onClick={() => setOpen(false)}
-                activeOptions={{ exact: true }}
-                activeProps={{ className: "text-brand" }}
                 className="py-3 text-base font-medium text-foreground/80 hover:text-brand"
               >
                 {l.label}
-              </Link>
+              </a>
             ))}
           </nav>
         </div>
