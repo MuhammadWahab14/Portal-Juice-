@@ -22,14 +22,16 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b transition-shadow duration-300 ${
-        scrolled ? "border-border shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)]" : "border-border/40"
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl backdrop-saturate-150 border-b transition-all duration-500 ${
+        scrolled
+          ? "bg-background/60 border-white/10 shadow-[0_4px_30px_-12px_rgba(0,0,0,0.25)]"
+          : "bg-white/5 border-white/10"
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
         <a href="/" className="flex items-center gap-3">
           <img src={logo} alt="Portal Juice" className="h-12 w-auto" />
-          <span className="hidden sm:inline text-lg font-serif font-semibold tracking-tight text-foreground">
+          <span className="hidden sm:inline text-lg font-serif font-semibold tracking-tight text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)]">
             Portal Juice
           </span>
         </a>
@@ -41,8 +43,8 @@ export function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className={`text-[15px] font-medium transition-colors hover:text-brand ${
-                  isActive ? "text-brand" : "text-foreground/70"
+                className={`text-[15px] font-medium transition-colors hover:text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] ${
+                  isActive ? "text-brand" : "text-white/80"
                 }`}
               >
                 {l.label}
@@ -53,7 +55,7 @@ export function Navbar() {
 
         <button
           aria-label="Toggle menu"
-          className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-foreground hover:bg-muted"
+          className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -61,14 +63,14 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-border bg-background">
+        <div className="md:hidden border-t border-white/10 bg-background/80 backdrop-blur-xl">
           <nav className="flex flex-col px-6 py-4">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="py-3 text-base font-medium text-foreground/80 hover:text-brand"
+                className="py-3 text-base font-medium text-foreground hover:text-brand"
               >
                 {l.label}
               </a>
