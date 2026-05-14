@@ -91,9 +91,7 @@ export function Hero() {
         </a>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[10px] font-medium uppercase tracking-[0.4em] text-white/60">
-        Scroll
-      </div>
+      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[10px] font-medium uppercase tracking-[0.4em] text-white/60" />
     </section>
   );
 }
