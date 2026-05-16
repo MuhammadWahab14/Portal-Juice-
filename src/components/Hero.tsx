@@ -128,7 +128,13 @@ export function Hero() {
                 opacity: i === activeIndex ? textOpacity : 0,
                 transform: i === activeIndex ? `translateY(${lift}px)` : "translateY(16px)",
               }}
-              className="font-serif absolute inset-0 flex items-center justify-center text-3xl font-medium leading-[1.25] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl transition-[opacity,transform] duration-700 ease-out"
+              style={{
+                opacity: i === activeIndex ? textOpacity : 0,
+                transform: i === activeIndex ? `translateY(${lift}px)` : "translateY(16px)",
+                fontFamily: "var(--font-display)",
+                textShadow: "0 2px 24px rgba(0,0,0,0.45)",
+              }}
+              className="absolute inset-0 flex items-center justify-center px-4 text-center text-4xl italic font-light leading-[1.15] tracking-[-0.01em] text-white sm:text-5xl md:text-6xl lg:text-7xl transition-[opacity,transform] duration-[1200ms] ease-out"
             >
               {line}
             </p>
