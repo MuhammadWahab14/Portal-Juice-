@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const VIDEO_1 = "/videos/03-video-full.mp4";
 const VIDEO_2 = "/videos/hero-video-2.mp4";
-const V1_DURATION = 9;
-const V2_DURATION = 10;
-const TOTAL = V1_DURATION + V2_DURATION; // 19s
-const FADE = 1.2;
+const FADE_MS = 1200;
+const FADE_S = FADE_MS / 1000;
 
 const lines = [
   "Nature doesn't rush… yet it creates perfection.",
@@ -14,53 +12,108 @@ const lines = [
 ];
 
 export function Hero() {
+  const v1Ref = useRef<HTMLVideoElement>(null);
+  const v2Ref = useRef<HTMLVideoElement>(null);
+  const [active, setActive] = useState<1 | 2>(1);
+  const [total, setTotal] = useState(18);
   const [t, setT] = useState(0);
+  const handoffArmedRef = useRef(false);
 
+  // Measure durations once metadata is loaded
+  useEffect(() => {
+    const update = () => {
+      const d1 = v1Ref.current?.duration;
+      const d2 = v2Ref.current?.duration;
+      if (d1 && d2 && Number.isFinite(d1) && Number.isFinite(d2)) {
+        setTotal(d1 + d2);
+      }
+    };
+    const v1 = v1Ref.current;
+    const v2 = v2Ref.current;
+    v1?.addEventListener("loadedmetadata", update);
+    v2?.addEventListener("loadedmetadata", update);
+    update();
+    return () => {
+      v1?.removeEventListener("loadedmetadata", update);
+      v2?.removeEventListener("loadedmetadata", update);
+    };
+  }, []);
+
+  // Seamless handoff: when the active video nears its end, pre-roll the other
+  // and switch after the crossfade.
+  useEffect(() => {
+    const activeEl = active === 1 ? v1Ref.current : v2Ref.current;
+    const otherEl = active === 1 ? v2Ref.current : v1Ref.current;
+    if (!activeEl || !otherEl) return;
+
+    handoffArmedRef.current = false;
+    activeEl.play().catch(() => {});
+
+    const onTime = () => {
+      const d = activeEl.duration;
+      if (!d || !Number.isFinite(d)) return;
+      const remaining = d - activeEl.currentTime;
+      if (!handoffArmedRef.current && remaining <= FADE_S) {
+        handoffArmedRef.current = true;
+        try {
+          otherEl.currentTime = 0;
+        } catch {}
+        otherEl.play().catch(() => {});
+        window.setTimeout(() => {
+          setActive((prev) => (prev === 1 ? 2 : 1));
+          try {
+            activeEl.pause();
+            activeEl.currentTime = 0;
+          } catch {}
+        }, FADE_MS);
+      }
+    };
+
+    activeEl.addEventListener("timeupdate", onTime);
+    return () => activeEl.removeEventListener("timeupdate", onTime);
+  }, [active]);
+
+  // Global clock for text timing, synced to combined duration
   useEffect(() => {
     const start = performance.now();
     let raf = 0;
     const tick = (now: number) => {
-      setT(((now - start) / 1000) % TOTAL);
+      setT(((now - start) / 1000) % total);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [total]);
 
-  // Video crossfade: show video2 from V1_DURATION - FADE onwards
-  const showV2 = t > V1_DURATION - FADE;
-
-  // Text timing: 3 lines spread across TOTAL with gentle fades
-  const segment = TOTAL / lines.length; // ~6.33s
+  const segment = total / lines.length;
   const activeIndex = Math.min(lines.length - 1, Math.floor(t / segment));
   const localT = t - activeIndex * segment;
   const fadeIn = Math.min(1, localT / 1.4);
   const fadeOut = Math.min(1, (segment - localT) / 1.4);
   const textOpacity = Math.max(0, Math.min(fadeIn, fadeOut));
-  const lift = (1 - fadeIn) * 16; // px
+  const lift = (1 - fadeIn) * 16;
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
       <video
+        ref={v1Ref}
         src={VIDEO_1}
         autoPlay
         muted
-        loop
         playsInline
         preload="auto"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${
-          showV2 ? "opacity-0" : "opacity-100"
+          active === 1 ? "opacity-100" : "opacity-0"
         }`}
       />
       <video
+        ref={v2Ref}
         src={VIDEO_2}
-        autoPlay
         muted
-        loop
         playsInline
         preload="auto"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${
-          showV2 ? "opacity-100" : "opacity-0"
+          active === 2 ? "opacity-100" : "opacity-0"
         }`}
       />
 
