@@ -127,8 +127,10 @@ export function Hero() {
               style={{
                 opacity: i === activeIndex ? textOpacity : 0,
                 transform: i === activeIndex ? `translateY(${lift}px)` : "translateY(16px)",
+                fontFamily: "var(--font-display)",
+                textShadow: "0 2px 24px rgba(0,0,0,0.45)",
               }}
-              className="font-serif absolute inset-0 flex items-center justify-center text-3xl font-medium leading-[1.25] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl transition-[opacity,transform] duration-700 ease-out"
+              className="absolute inset-0 flex items-center justify-center px-4 text-center text-4xl italic font-light leading-[1.15] tracking-[-0.01em] text-white sm:text-5xl md:text-6xl lg:text-7xl transition-[opacity,transform] duration-[1200ms] ease-out"
             >
               {line}
             </p>
@@ -137,10 +139,10 @@ export function Hero() {
 
         <a
           href="/juices"
-          className="mt-12 inline-flex items-center gap-3 border border-brand/70 bg-brand/10 px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.3em] text-white backdrop-blur-sm transition-all duration-500 hover:bg-brand hover:border-brand hover:tracking-[0.4em]"
+          className="group mt-12 inline-flex items-center gap-3 border border-brand/70 bg-brand/10 px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.3em] text-white backdrop-blur-sm transition-all duration-700 ease-out hover:bg-brand hover:border-brand hover:tracking-[0.4em] hover:shadow-[0_10px_40px_-10px_rgba(34,197,94,0.6)]"
         >
           Explore Juices
-          <span aria-hidden className="h-px w-6 bg-current" />
+          <span aria-hidden className="h-px w-6 bg-current transition-all duration-700 ease-out group-hover:w-10" />
         </a>
       </div>
 

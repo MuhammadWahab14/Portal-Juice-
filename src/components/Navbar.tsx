@@ -6,7 +6,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/juices", label: "Juices" },
-  { href: "/contact", label: "Contact Info" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -43,8 +43,8 @@ export function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className={`text-[15px] font-medium transition-colors hover:text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] ${
-                  isActive ? "text-brand" : "text-white/80"
+                className={`relative text-[15px] font-medium transition-all duration-500 ease-out hover:text-white hover:tracking-wide drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 hover:after:scale-x-100 ${
+                  isActive ? "text-brand after:scale-x-100" : "text-white/80"
                 }`}
               >
                 {l.label}
