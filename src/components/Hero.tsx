@@ -6,8 +6,8 @@ const FADE_MS = 1200;
 const FADE_S = FADE_MS / 1000;
 
 const lines = [
-  "Nature doesn't rush… yet it creates perfection.",
-  "Every drop begins with real fruits and vegetables — pure, vibrant, alive.",
+  "Nature doesn't rush, yet it creates perfection.",
+  "Every drop begins with real fruits and vegetables, pure, vibrant, alive.",
   "Fuel your day with what your body was made for.",
 ];
 
@@ -130,7 +130,7 @@ export function Hero() {
                 fontFamily: "var(--font-display)",
                 textShadow: "0 2px 24px rgba(0,0,0,0.45)",
               }}
-              className="absolute inset-0 flex items-center justify-center px-4 text-center text-4xl italic font-light leading-[1.15] tracking-[-0.01em] text-white sm:text-5xl md:text-6xl lg:text-7xl transition-[opacity,transform] duration-[1200ms] ease-out"
+            className="absolute inset-0 flex items-center justify-center px-4 text-center text-5xl font-normal leading-[1.1] tracking-normal text-white sm:text-6xl md:text-7xl lg:text-8xl transition-[opacity,transform] duration-[1200ms] ease-out"
             >
               {line}
             </p>

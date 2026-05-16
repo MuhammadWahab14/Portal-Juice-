@@ -29,11 +29,8 @@ export function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-        <a href="/" className="flex items-center gap-3">
+        <a href="/" className="flex items-center">
           <img src={logo} alt="Portal Juice" className="h-12 w-auto" />
-          <span className="hidden sm:inline text-lg font-serif font-semibold tracking-tight text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)]">
-            Portal Juice
-          </span>
         </a>
 
         <nav className="hidden md:flex items-center gap-10">
