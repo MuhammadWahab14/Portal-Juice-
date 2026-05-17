@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 const VIDEO_1 = "/videos/03-video-full.mp4";
 const VIDEO_2 = "/videos/hero-video-2.mp4";
+const SFX_1 = "/sfx/whoosh.mp3";
+const SFX_2 = "/sfx/splash.mp3";
+const TARGET_VOLUME = 0.2;
+const FADE_AUDIO_MS = 600;
 const FADE_MS = 1200;
 const FADE_S = FADE_MS / 1000;
 
@@ -14,10 +18,57 @@ const lines = [
 export function Hero() {
   const v1Ref = useRef<HTMLVideoElement>(null);
   const v2Ref = useRef<HTMLVideoElement>(null);
+  const a1Ref = useRef<HTMLAudioElement | null>(null);
+  const a2Ref = useRef<HTMLAudioElement | null>(null);
   const [active, setActive] = useState<1 | 2>(1);
   const [total, setTotal] = useState(18);
   const [t, setT] = useState(0);
   const handoffArmedRef = useRef(false);
+
+  // Lazy-create audio elements (avoid SSR window access)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const a1 = new Audio(SFX_1);
+    const a2 = new Audio(SFX_2);
+    a1.preload = "auto";
+    a2.preload = "auto";
+    a1.volume = 0;
+    a2.volume = 0;
+    a1Ref.current = a1;
+    a2Ref.current = a2;
+    return () => {
+      a1.pause();
+      a2.pause();
+      a1Ref.current = null;
+      a2Ref.current = null;
+    };
+  }, []);
+
+  const fadeAudio = (el: HTMLAudioElement, to: number, ms: number) => {
+    const from = el.volume;
+    const start = performance.now();
+    const step = (now: number) => {
+      const k = Math.min(1, (now - start) / ms);
+      el.volume = Math.max(0, Math.min(1, from + (to - from) * k));
+      if (k < 1) requestAnimationFrame(step);
+      else if (to === 0) {
+        try { el.pause(); el.currentTime = 0; } catch {}
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  const playSfx = (which: 1 | 2) => {
+    const el = which === 1 ? a1Ref.current : a2Ref.current;
+    const other = which === 1 ? a2Ref.current : a1Ref.current;
+    if (other) fadeAudio(other, 0, FADE_AUDIO_MS);
+    if (!el) return;
+    try { el.currentTime = 0; } catch {}
+    el.volume = 0;
+    el.play()
+      .then(() => fadeAudio(el, TARGET_VOLUME, FADE_AUDIO_MS))
+      .catch(() => {/* autoplay blocked until user interaction */});
+  };
 
   // Measure durations once metadata is loaded
   useEffect(() => {
@@ -48,6 +99,7 @@ export function Hero() {
 
     handoffArmedRef.current = false;
     activeEl.play().catch(() => {});
+    playSfx(active);
 
     const onTime = () => {
       const d = activeEl.duration;
@@ -71,6 +123,22 @@ export function Hero() {
 
     activeEl.addEventListener("timeupdate", onTime);
     return () => activeEl.removeEventListener("timeupdate", onTime);
+  }, [active]);
+
+  // Resume audio on first user interaction if autoplay was blocked
+  useEffect(() => {
+    const resume = () => {
+      const el = active === 1 ? a1Ref.current : a2Ref.current;
+      if (el && el.paused) playSfx(active);
+      window.removeEventListener("pointerdown", resume);
+      window.removeEventListener("keydown", resume);
+    };
+    window.addEventListener("pointerdown", resume, { once: true });
+    window.addEventListener("keydown", resume, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", resume);
+      window.removeEventListener("keydown", resume);
+    };
   }, [active]);
 
   // Global clock for text timing, synced to combined duration
