@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useLocation } from "@tanstack/react-router";
 import logo from "@/assets/portal-juice-logo.png";
 
 const links = [
@@ -12,6 +13,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -35,13 +37,17 @@ export function Navbar() {
 
         <nav className="hidden md:flex items-center gap-10">
           {links.map((l) => {
-            const isActive = typeof window !== "undefined" && window.location.pathname === l.href;
+            const isActive =
+              l.href === "/" ? pathname === "/" : pathname === l.href || pathname.startsWith(l.href + "/");
             return (
               <a
                 key={l.href}
                 href={l.href}
-                className={`relative text-[15px] font-medium transition-all duration-500 ease-out hover:text-white hover:tracking-wide drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 hover:after:scale-x-100 ${
-                  isActive ? "text-brand after:scale-x-100" : "text-white/80"
+                aria-current={isActive ? "page" : undefined}
+                className={`relative text-[15px] font-medium transition-all duration-500 ease-out hover:text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] after:absolute after:left-0 after:-bottom-1.5 after:h-px after:w-full after:origin-left after:bg-brand after:transition-transform after:duration-500 ${
+                  isActive
+                    ? "text-white tracking-wide after:scale-x-100 after:shadow-[0_0_12px_rgba(34,197,94,0.6)]"
+                    : "text-white/75 after:scale-x-0 hover:after:scale-x-100 hover:after:bg-white/70"
                 }`}
               >
                 {l.label}
@@ -62,16 +68,23 @@ export function Navbar() {
       {open && (
         <div className="md:hidden border-t border-white/10 bg-background/80 backdrop-blur-xl">
           <nav className="flex flex-col px-6 py-4">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="py-3 text-base font-medium text-foreground hover:text-brand"
-              >
-                {l.label}
-              </a>
-            ))}
+            {links.map((l) => {
+              const isActive =
+                l.href === "/" ? pathname === "/" : pathname === l.href || pathname.startsWith(l.href + "/");
+              return (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`py-3 text-base font-medium transition-colors ${
+                    isActive ? "text-brand" : "text-foreground hover:text-brand"
+                  }`}
+                >
+                  {l.label}
+                </a>
+              );
+            })}
           </nav>
         </div>
       )}
