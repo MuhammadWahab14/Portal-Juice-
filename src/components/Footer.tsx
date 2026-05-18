@@ -1,9 +1,9 @@
-import { Instagram, Facebook, Twitter, MessageCircle } from "lucide-react";
+import { Instagram, Facebook, Linkedin, MessageCircle } from "lucide-react";
 
 const socials = [
   { href: "https://instagram.com", label: "Instagram", Icon: Instagram },
   { href: "https://facebook.com", label: "Facebook", Icon: Facebook },
-  { href: "https://twitter.com", label: "Twitter", Icon: Twitter },
+  { href: "https://linkedin.com", label: "LinkedIn", Icon: Linkedin },
   { href: "https://wa.me/", label: "WhatsApp", Icon: MessageCircle },
 ];
 
