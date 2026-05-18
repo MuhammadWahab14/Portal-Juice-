@@ -18,14 +18,14 @@ export function Navbar() {
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 px-4">
-      <div className="mx-auto max-w-6xl rounded-full border border-black/5 bg-white/80 backdrop-blur-md backdrop-saturate-150 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] transition-all duration-300">
-        <div className="flex h-16 items-center justify-between pl-6 pr-4 md:pl-8 md:pr-6">
-          <a href="/" className="flex items-center">
-            <img src={logo} alt="Portal Juice" className="h-10 w-auto" />
+    <header className="fixed top-4 left-0 right-0 z-50 px-6 md:px-10">
+      <div className="mx-auto max-w-5xl rounded-full border border-black/5 bg-white/90 backdrop-blur-md backdrop-saturate-150 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] transition-all duration-300">
+        <div className="flex h-14 items-center justify-between pl-5 pr-3 md:pl-6 md:pr-5">
+          <a href="/" className="flex items-center shrink-0">
+            <img src={logo} alt="Portal Juice" className="h-12 md:h-14 w-auto" />
           </a>
 
-          <nav className="hidden md:flex items-center gap-10">
+          <nav className="hidden md:flex items-center gap-12 ml-auto">
             {links.map((l) => {
               const isActive = isActiveHref(l.href);
               return (
