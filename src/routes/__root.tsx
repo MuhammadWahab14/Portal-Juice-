@@ -9,7 +9,6 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { SocialDock } from "@/components/SocialDock";
 
 function NotFoundComponent() {
   return (
@@ -119,7 +118,6 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
-      <SocialDock />
     </QueryClientProvider>
   );
 }
