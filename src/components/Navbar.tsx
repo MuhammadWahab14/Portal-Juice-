@@ -19,10 +19,10 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/5">
-      <div className="w-full">
-        <div className="flex h-16 md:h-20 items-center justify-between pl-6 pr-6 md:pl-12 md:pr-12">
+      <div className="w-full max-w-[100vw] overflow-hidden">
+        <div className="flex h-20 md:h-28 items-center justify-between pl-4 pr-4 sm:pl-8 sm:pr-8 md:pl-12 md:pr-12">
           <a href="/" className="flex items-center shrink-0">
-            <img src={logo} alt="Portal Juice" className="h-12 md:h-14 w-auto" />
+            <img src={logo} alt="Portal Juice" className="h-16 sm:h-20 md:h-24 w-auto" />
           </a>
 
           <nav className="hidden md:flex items-center gap-10 lg:gap-12 ml-auto">
