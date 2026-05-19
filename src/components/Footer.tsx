@@ -10,8 +10,8 @@ const socials = [
 export function Footer() {
   return (
     <footer className="absolute bottom-0 left-0 right-0 z-30 pointer-events-none">
-      <div className="pointer-events-auto mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-4 py-3 text-xs text-white/80 sm:flex-row sm:px-8 sm:py-4 sm:text-sm">
-        <p className="tracking-[0.2em] uppercase text-white/70 drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
+      <div className="pointer-events-auto flex w-full flex-col items-center justify-between gap-3 px-4 py-3 sm:flex-row sm:px-6 sm:py-4">
+        <p className="text-[10px] font-light tracking-[0.25em] uppercase text-white/60 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] sm:text-[11px]">
           © 2026 Portal Juice — Gateway to Health
         </p>
         <nav className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 backdrop-blur-md backdrop-saturate-150 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.4)]">
