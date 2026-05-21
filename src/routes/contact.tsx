@@ -60,7 +60,7 @@ function ContactPage() {
         </section>
       </main>
 
-      <Footer />
+      <Footer variant="light" />
     </div>
   );
 }
