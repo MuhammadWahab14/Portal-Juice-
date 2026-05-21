@@ -17,14 +17,14 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white text-foreground">
+    <div className="relative h-screen overflow-hidden bg-white text-foreground flex flex-col">
       <Navbar />
 
       <section
         id="about"
-        className="overflow-hidden bg-white pb-28"
+        className="flex-1 overflow-y-auto bg-white pt-[calc(var(--nav-h)+1rem)] pb-[calc(var(--footer-h)+1rem)]"
       >
-        <div className="mx-auto flex max-w-7xl flex-col justify-center px-4 pt-[96px] pb-6 sm:px-6 md:px-10 md:pt-[140px]">
+        <div className="mx-auto flex max-w-7xl flex-col justify-center px-4 sm:px-6 md:px-10">
           <div className="grid grid-cols-2 items-center gap-x-4 gap-y-3 sm:block md:grid md:grid-cols-12 md:gap-x-12 lg:gap-x-14">
             {/* Column 1 */}
             <div className="md:col-span-4">
@@ -91,7 +91,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <Footer variant="light" />
+      <Footer />
     </div>
   );
 }

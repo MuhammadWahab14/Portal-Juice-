@@ -17,10 +17,10 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   return (
-    <div className="contact-shell relative">
+    <div className="contact-shell relative h-screen overflow-hidden">
       <Navbar />
 
-      <main className="contact-main pt-[96px] md:pt-[140px]">
+      <main className="contact-main pt-[calc(var(--nav-h)+2.25rem)] pb-[calc(var(--footer-h)+1.25rem)] overflow-y-auto">
         <section className="contact-left fade-in">
           <p className="contact-intro">
             Do you want to get in touch?<br />
@@ -42,11 +42,19 @@ function ContactPage() {
           <div className="map-frame">
             <iframe
               title="Portal Juice location"
-              src="https://www.google.com/maps?q=Business+Bay+Dubai&output=embed"
+              src="https://www.google.com/maps?q=Portal+Juice+Business+Bay+Dubai&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
+          <a
+            href="https://go.2gis.com/WPbPj"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-link self-end text-[11px] uppercase tracking-[0.18em]"
+          >
+            Open in 2GIS →
+          </a>
           <div className="connect-block">
             <h3 className="connect-title">CONNECT</h3>
             <p className="phone-line"><span>+971586072026</span><span className="phone-region">UAE</span></p>
@@ -60,7 +68,7 @@ function ContactPage() {
         </section>
       </main>
 
-      <Footer variant="light" />
+      <Footer />
     </div>
   );
 }
