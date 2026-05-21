@@ -162,6 +162,8 @@
 /* ===== Shared brand tokens (used across about / juices / contact) ===== */
 :root {
   --brand-green: oklch(0.62 0.18 145);
+  --nav-h: 112px;
+  --footer-h: 56px;
   --pj-green: oklch(0.62 0.18 145);
   --pj-green-deep: oklch(0.52 0.18 145);
   --pj-bg: oklch(0.965 0.004 90);
