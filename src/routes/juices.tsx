@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -72,56 +71,19 @@ function JuiceCard({ juice, onHover }: { juice: Juice; onHover?: () => void }) {
 }
 
 function JuicesPage() {
-  const [activeJuice, setActiveJuice] = useState<Juice>(juices[7]);
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative h-screen overflow-hidden bg-background flex flex-col">
       <Navbar />
-      <main className="overflow-x-hidden px-6 pb-32 pt-28 md:px-12 md:pt-36 lg:px-20">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden px-6 md:px-12 lg:px-20 pt-[calc(var(--nav-h)+1rem)] pb-[calc(var(--footer-h)+1rem)]">
         <div className="mx-auto max-w-7xl">
           <section aria-label="Juice categories" className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {juices.map((j) => (
-              <JuiceCard key={j.title} juice={j} onHover={() => setActiveJuice(j)} />
+              <JuiceCard key={j.title} juice={j} />
             ))}
-          </section>
-
-          <section aria-label="Featured wellness blend" className="mt-24 border-t border-[var(--brand-green)]/20 pt-16">
-            <article className="overflow-hidden rounded-2xl border border-[var(--brand-green)]/30 bg-white">
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                <div
-                  key={activeJuice.title + "-img"}
-                  className="aspect-[4/5] w-full animate-fade-in bg-cover bg-center transition-all duration-500 md:aspect-auto md:min-h-[520px]"
-                  style={{ backgroundImage: `url(${activeJuice.image})`, backgroundPosition: activeJuice.position ?? "center" }}
-                  role="img"
-                  aria-label={`${activeJuice.title} cold-pressed wellness blend`}
-                />
-                <div key={activeJuice.title} className="flex animate-fade-in flex-col justify-center gap-6 p-8 md:p-14">
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--brand-green)]">{activeJuice.title}</p>
-                  <h3 className="font-serif text-2xl font-semibold tracking-tight text-foreground md:text-4xl">
-                    {activeJuice.title}, Naturally Bottled.
-                  </h3>
-                  <p className="max-w-prose text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
-                    {activeJuice.description}
-                  </p>
-                  <div className="space-y-1 text-xs font-bold uppercase tracking-[0.2em] text-foreground">
-                    <p>No Added Sugar</p><p>No Added Water</p>
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Ingredients</p>
-                    <p className="mt-2 max-w-prose text-pretty text-sm leading-relaxed text-foreground/80">{activeJuice.ingredients}</p>
-                  </div>
-                  <button
-                    type="button"
-                    className="mt-2 inline-flex w-fit items-center justify-center rounded-sm border border-foreground bg-foreground px-7 py-3 text-xs font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-[var(--brand-green)] hover:border-[var(--brand-green)] hover:text-white"
-                  >
-                    Order Now
-                  </button>
-                </div>
-              </div>
-            </article>
           </section>
         </div>
       </main>
-      <Footer variant="light" />
+      <Footer />
     </div>
   );
 }
