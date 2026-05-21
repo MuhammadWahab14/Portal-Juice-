@@ -121,7 +121,7 @@ function JuicesPage() {
           </section>
         </div>
       </main>
-      <Footer />
+      <Footer variant="light" />
     </div>
   );
 }

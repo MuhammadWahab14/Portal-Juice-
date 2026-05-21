@@ -91,7 +91,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer variant="light" />
     </div>
   );
 }
